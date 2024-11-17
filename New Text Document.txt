@@ -1,0 +1,149 @@
+using System.Collections.Generic;
+using System;
+
+namespace CRUD
+{
+    internal class Program
+    {
+        public static List<string> PhoneNumbers = new List<string>();
+        public static void DataSeed()
+        {
+            PhoneNumbers.Add("+998770712606");
+            PhoneNumbers.Add("+998770712607");
+            PhoneNumbers.Add("+998770712608");
+            PhoneNumbers.Add("+998770712609");
+
+        }
+        static void Main(string[] args)
+        {
+            DataSeed();
+            StartFrontEnd();
+            GetPhoneNumbers();
+        }
+        public static void StartFrontEnd()
+        {
+            while (true)
+            {
+                Console.WriteLine("1. Add phone number:");
+                Console.WriteLine("2. Delete phone number:");
+                Console.WriteLine("3. Update phone number:");
+                Console.WriteLine("4. Read phone number:");
+                Console.Write("Choose:");
+                var option = int.Parse(Console.ReadLine());
+                if (option == 1)
+                {
+                    Console.Write("Enter phone number:");
+                    var phoneNumber = Console.ReadLine();
+                    var index = Addnumber(phoneNumber);
+                    if (index == -1)
+                    {
+                        Console.WriteLine("Not added, error accured");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Added, successed index : {index}");
+                    }
+                }
+                else if (option == 2)
+                {
+                    Console.Write("Enter  deleted phonenumber:");
+                    var phoneNumber = Console.ReadLine();
+                    var boolResult = DeletePhoneNumber(phoneNumber);
+                    if (boolResult is true)
+                    {
+                        Console.WriteLine("Deleted, succesed");
+                    }
+                    else
+                    {
+
+                        Console.WriteLine("Not added, error accured");
+
+                    }
+                }
+                else if (option == 3)
+                {
+                    Console.Write("Enter old phonenumber:");
+                    var oldphoneNumber = Console.ReadLine();
+                    Console.Write("Update phonenumber:");
+                    var newphoneNumber = Console.ReadLine();
+                    var boolResult = UpdatePhoneNumber(oldphoneNumber, newphoneNumber);
+                    if (boolResult is true)
+                    {
+                        Console.WriteLine("Update, succesed");
+                    }
+                    else
+                    {
+
+                        Console.WriteLine("Not update, error accured");
+
+
+                    }
+                }
+                else if (option == 4)
+                {
+                    var phoneNumbers = GetPhoneNumbers();
+                    foreach (var phoneNumber in phoneNumbers)
+                    {
+                        Console.WriteLine(phoneNumber);
+                    }
+                }
+                Console.ReadKey();
+                Console.Clear();
+            }
+        }
+        public static int Addnumber(string phoneNumber)
+        {
+            var exsits = PhoneNumbers.Contains(phoneNumber);
+            var isValidFarmat = CheckPhoneNumber(phoneNumber);
+            if (exsits is true || isValidFarmat is false)
+            {
+                return -1;
+            }
+            PhoneNumbers.Add(phoneNumber);
+            return PhoneNumbers.Count - 1;
+        }
+        public static bool CheckPhoneNumber(string phoneNumber)
+        {
+            var firstCheckphoneNumber = phoneNumber[0] == '+';
+            var secondCheckphoneNumber = phoneNumber[1] == '9';
+            var thirdCheckphoneNumber = phoneNumber[2] == '9';
+            var fourCheckphoneNumber = phoneNumber[3] == '8';
+            var fiveCheckphoneNumber = phoneNumber.Length == 13; //+998770712606
+            var sixCheckphoneNumber = true;
+            for (var i = 4; i < phoneNumber.Length; i++)
+            {
+                if (Char.IsDigit(phoneNumber[i]) is false)
+                {
+                    sixCheckphoneNumber = false;
+                    break;
+                }
+            }
+            return firstCheckphoneNumber && secondCheckphoneNumber && thirdCheckphoneNumber && fourCheckphoneNumber && fiveCheckphoneNumber && sixCheckphoneNumber;
+        }
+        public static bool DeletePhoneNumber(string phoneNumber)
+        {
+            var exsits = PhoneNumbers.Contains(phoneNumber);
+            PhoneNumbers.Remove(phoneNumber);
+            return exsits;
+        }
+        public static bool UpdatePhoneNumber(string oldphoneNumber, string newphoneNumber)
+        {
+            var index = PhoneNumbers.IndexOf(oldphoneNumber);
+            var boolResult = false;
+            var isValidFarmat = CheckPhoneNumber(newphoneNumber);
+            if (index < 0 || isValidFarmat is false)
+            {
+                return boolResult;
+            }
+            PhoneNumbers[index] = newphoneNumber;
+            boolResult = true;
+
+            return boolResult;
+        }
+        public static List<string> GetPhoneNumbers()
+        {
+            return PhoneNumbers;
+        }
+    }
+
+}
