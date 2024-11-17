@@ -59,9 +59,7 @@ namespace CRUD
                         Console.WriteLine("Not added, error accured");
 
                     }
-                }
-                else if (option == 3)
-                {
+                }                {
                     Console.Write("Enter old phonenumber:");
                     var oldphoneNumber = Console.ReadLine();
                     Console.Write("Update phonenumber:");
