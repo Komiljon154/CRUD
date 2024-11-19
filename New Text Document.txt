@@ -1,147 +1,386 @@
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace CRUD
-{
+
+
+
     internal class Program
+{
+    public static List<string> CardNumber = new List<string>();
+    public static List<string> CreditNumber = new List<string>();
+    public static List<string> CreditCardNumber = new List<string>();
+    public static void DataSeed()
     {
-        public static List<string> PhoneNumbers = new List<string>();
-        public static void DataSeed()
-        {
-            PhoneNumbers.Add("+998770712606");
-            PhoneNumbers.Add("+998770712607");
-            PhoneNumbers.Add("+998770712608");
-            PhoneNumbers.Add("+998770712609");
-
-        }
-        static void Main(string[] args)
-        {
-            DataSeed();
-            StartFrontEnd();
-            GetPhoneNumbers();
-        }
-        public static void StartFrontEnd()
-        {
-            while (true)
-            {
-                Console.WriteLine("1. Add phone number:");
-                Console.WriteLine("2. Delete phone number:");
-                Console.WriteLine("3. Update phone number:");
-                Console.WriteLine("4. Read phone number:");
-                Console.Write("Choose:");
-                var option = int.Parse(Console.ReadLine());
-                if (option == 1)
-                {
-                    Console.Write("Enter phone number:");
-                    var phoneNumber = Console.ReadLine();
-                    var index = Addnumber(phoneNumber);
-                    if (index == -1)
-                    {
-                        Console.WriteLine("Not added, error accured");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Added, successed index : {index}");
-                    }
-                }
-                else if (option == 2)
-                {
-                    Console.Write("Enter  deleted phonenumber:");
-                    var phoneNumber = Console.ReadLine();
-                    var boolResult = DeletePhoneNumber(phoneNumber);
-                    if (boolResult is true)
-                    {
-                        Console.WriteLine("Deleted, succesed");
-                    }
-                    else
-                    {
-
-                        Console.WriteLine("Not added, error accured");
-
-                    }
-                }                {
-                    Console.Write("Enter old phonenumber:");
-                    var oldphoneNumber = Console.ReadLine();
-                    Console.Write("Update phonenumber:");
-                    var newphoneNumber = Console.ReadLine();
-                    var boolResult = UpdatePhoneNumber(oldphoneNumber, newphoneNumber);
-                    if (boolResult is true)
-                    {
-                        Console.WriteLine("Update, succesed");
-                    }
-                    else
-                    {
-
-                        Console.WriteLine("Not update, error accured");
-
-
-                    }
-                }
-                else if (option == 4)
-                {
-                    var phoneNumbers = GetPhoneNumbers();
-                    foreach (var phoneNumber in phoneNumbers)
-                    {
-                        Console.WriteLine(phoneNumber);
-                    }
-                }
-                Console.ReadKey();
-                Console.Clear();
-            }
-        }
-        public static int Addnumber(string phoneNumber)
-        {
-            var exsits = PhoneNumbers.Contains(phoneNumber);
-            var isValidFarmat = CheckPhoneNumber(phoneNumber);
-            if (exsits is true || isValidFarmat is false)
-            {
-                return -1;
-            }
-            PhoneNumbers.Add(phoneNumber);
-            return PhoneNumbers.Count - 1;
-        }
-        public static bool CheckPhoneNumber(string phoneNumber)
-        {
-            var firstCheckphoneNumber = phoneNumber[0] == '+';
-            var secondCheckphoneNumber = phoneNumber[1] == '9';
-            var thirdCheckphoneNumber = phoneNumber[2] == '9';
-            var fourCheckphoneNumber = phoneNumber[3] == '8';
-            var fiveCheckphoneNumber = phoneNumber.Length == 13; //+998770712606
-            var sixCheckphoneNumber = true;
-            for (var i = 4; i < phoneNumber.Length; i++)
-            {
-                if (Char.IsDigit(phoneNumber[i]) is false)
-                {
-                    sixCheckphoneNumber = false;
-                    break;
-                }
-            }
-            return firstCheckphoneNumber && secondCheckphoneNumber && thirdCheckphoneNumber && fourCheckphoneNumber && fiveCheckphoneNumber && sixCheckphoneNumber;
-        }
-        public static bool DeletePhoneNumber(string phoneNumber)
-        {
-            var exsits = PhoneNumbers.Contains(phoneNumber);
-            PhoneNumbers.Remove(phoneNumber);
-            return exsits;
-        }
-        public static bool UpdatePhoneNumber(string oldphoneNumber, string newphoneNumber)
-        {
-            var index = PhoneNumbers.IndexOf(oldphoneNumber);
-            var boolResult = false;
-            var isValidFarmat = CheckPhoneNumber(newphoneNumber);
-            if (index < 0 || isValidFarmat is false)
-            {
-                return boolResult;
-            }
-            PhoneNumbers[index] = newphoneNumber;
-            boolResult = true;
-
-            return boolResult;
-        }
-        public static List<string> GetPhoneNumbers()
-        {
-            return PhoneNumbers;
-        }
+        CardNumber.Add("9860012106322345");
+        CardNumber.Add("9860022106322345");
+        CardNumber.Add("9860032106322345");
+        CardNumber.Add("9860042106322345");
+        CardNumber.Add("9860052106322345");
+    }
+    public static void DatSeed()
+    {
+        CreditNumber.Add("5614012106322345");
+        CreditNumber.Add("5614022106322345");
+        CreditNumber.Add("5614032106322345");
+        CreditNumber.Add("5614042106322345");
+        CreditNumber.Add("5614052106322345");
+    }
+    public static void Seed()
+    {
+        CreditCardNumber.Add("1234012106322345");
+        CreditCardNumber.Add("1234022106322345");
+        CreditCardNumber.Add("1234032106322345");
+        CreditCardNumber.Add("1234042106322345");
+        CreditCardNumber.Add("1234052106322345");
+    }
+    static void Main(string[] texts)
+    {
+        DataSeed();
+        DatSeed();
+        DaSeed();
+        StartFrontend();
     }
 
-}
+    public static void StartFrontend()
+    {
+        while (true)
+        {
+            Console.WriteLine("<====================================================================================>")
+                    Console.WriteLine("1.HUMO");
+            Console.WriteLine("2.UZCARD");
+            Console.WriteLine("3.VISA");
+            Console.Write("Enter: ");
+            var card = int.Parse(Console.ReadLine());
+            bool boolResult = true;
+            while (boolResult)
+            {
+                if (card == 1)
+                {
+                    Console.WriteLine("you chose HUMO card =>>> ");
+                    Menu(out int option);
+
+                    if (option == 1)
+                    {
+                        Console.WriteLine("Enter AddCardNumber");
+                        var cardNumber = Console.ReadLine();
+                        var result = AddCreditCard(cardNumber);
+                        if (result == -1)
+                        {
+                            
+                            Console.WriteLine("not added, error occured");
+                            
+                        }
+                        else
+                        {
+                            Console.WriteLine("added successfully");
+                        }
+                    }
+                    else if (option == 2)
+                    {
+                        Console.WriteLine("Enter DeleteNumber");
+                        var Cardnumber = Console.ReadLine();
+                        var result = DeleteCard(Cardnumber);
+                        if (result is true)
+                        {
+                            Console.WriteLine("deleted successed");
+                        }
+                        else
+                        {
+                            Console.WriteLine("not deleted error occured");
+                        }
+                    }
+                    else if (option == 3)
+                    {
+                        Console.WriteLine("Enter oldNumber");
+                        var oldNumber = Console.ReadLine();
+                        Console.WriteLine("Enter newNumber");
+                        var newNumber = Console.ReadLine();
+                        var result = UpdateNumber(oldNumber, newNumber);
+                        if (result is true)
+                        {
+                            Console.WriteLine("deleted, changed");
+                        }
+                        else
+                        {
+                            Console.WriteLine("not deleted, not changed");
+                        }
+                    }
+                    else if (option == 4)
+                    {
+                        var result = GetCardNumber();
+                        foreach (var number in result)
+                        {
+                            Console.WriteLine(number);
+                        }
+                    }
+                }
+                if (card == 2)
+                {
+                    Console.WriteLine("you chose UZCARD card");
+                    Menu(out int option);
+
+                    if (option == 1)
+                    {
+                        Console.WriteLine("Enter AddCardNumber");
+                        var cardNumber = Console.ReadLine();
+                        var result = PlusCreditCard(cardNumber);
+                        if (result == -1)
+                        {
+                            Console.WriteLine("not added, error occured");
+                        }
+                        else
+                        {
+                            Console.WriteLine("added successfully");
+                        }
+                    }
+                    else if (option == 2)
+                    {
+                        Console.WriteLine("Enter DeleteNumber");
+                        var Cardnumber = Console.ReadLine();
+                        var result = DeleteCard(Cardnumber);
+                        if (result is true)
+                        {
+                            Console.WriteLine("deleted successed");
+                        }
+                        else
+                        {
+                            Console.WriteLine("not deleted error occured");
+                        }
+                    }
+                    else if (option == 3)
+                    {
+                        Console.WriteLine("Enter oldNumber");
+                        var oldNumber = Console.ReadLine();
+                        Console.WriteLine("Enter newNumber");
+                        var newNumber = Console.ReadLine();
+                        var result = NewNumber(oldNumber, newNumber);
+                        if (result is true)
+                        {
+                            Console.WriteLine("deleted, changed");
+                        }
+                        else
+                        {
+                            Console.WriteLine("not deleted, not changed");
+                        }
+                    }
+                    else if (option == 4)
+                    {
+                        var result = TakeCardNumber();
+                        foreach (var number in result)
+                        {
+                            Console.WriteLine(number);
+                        }
+
+                    }
+                }
+                if (card == 3)
+                {
+                    Console.WriteLine("you choose VISA card");
+                    Menu(out int option);
+
+                    if (option == 1)
+                    {
+                        Console.WriteLine("Enter AddCardNumber");
+                        var cardNumber = Console.ReadLine();
+                        var result = NewCreditCard(cardNumber);
+                        if (result == -1)
+                        {
+                            Console.WriteLine("not added, error occured");
+                        }
+                        else
+                        {
+                            Console.WriteLine("added successfully");
+                        }
+                    }
+                    else if (option == 2)
+                    {
+                        Console.WriteLine("Enter DeleteNumber");
+                        var Cardnumber = Console.ReadLine();
+                        var result = DeleteCard(Cardnumber);
+                        if (result is true)
+                        {
+                            Console.WriteLine("deleted successed");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Not deleted");
+                        }
+                    }
+                    else if (option == 3)
+                    {
+                        Console.WriteLine("Enter oldNumber");
+                        var oldNumber = Console.ReadLine();
+                        Console.WriteLine("Enter newNumber");
+                        var newNumber = Console.ReadLine();
+                        var result = ImproveNumber(oldNumber, newNumber);
+                        if (result is true)
+                        {
+                            Console.WriteLine("deleted, changed");
+                        }
+                        else
+                        {
+                            Console.WriteLine("not deleted, not changed");
+                        }
+                    }
+                    else if (option == 4)
+                    {
+                        var result = HaveCardNumber();
+                        foreach (var number in result)
+                        {
+                            Console.WriteLine(number);
+                        }
+                    }
+                }
+
+            }
+            Console.ReadKey();
+            Console.Clear();
+        }
+    }
+    public static int AddCreditCard(string number)
+    {
+        var exist = CardNumber.Contains(number);
+        var IsDigitNumber = CheckCardNumber(number);
+        if (exist is true || IsDigitNumber is false)
+        {
+            return -1;
+        }
+        CardNumber.Add(number);
+        return CardNumber.Count - 1;
+    }
+    public static int PlusCreditCard(string number)
+    {
+        var exist = CreditNumber.Contains(number);
+        var IsDigitNumber = SeeCardNumber(number);
+        if (exist is true || IsDigitNumber is false)
+        {
+            return -1;
+        }
+        CreditNumber.Add(number);
+        return CreditNumber.Count - 1;
+    }
+    public static int NewCreditCard(string number)
+    {
+        var exist = CreditCardNumber.Contains(number);
+        var IsDigitNumber = ShowCardNumber(number);
+        if (exist is true || IsDigitNumber is false)
+        {
+            return -1;
+        }
+        CreditCardNumber.Add(number);
+        return CreditCardNumber.Count - 1;
+    }
+    public static bool CheckCardNumber(string number)
+    {
+        var firstCheck = number.Length == 16;
+        var secondCheck = true;
+        for (var i = 0; i < number.Length; i++)
+        {
+            if (char.IsDigit(number[i]) is false && firstCheck is false)
+            {
+                secondCheck = false;
+                break;
+            }
+        }
+        return firstCheck && secondCheck && thirdCheck;
+    }
+    public static bool SeeCardNumber(string number)
+    {
+        var firstCheck = number.Length == 16;
+        var secondCheck = true;
+        for (var i = 0; i < number.Length; i++)
+        {
+            if (char.IsDigit(number[i]) is false && firstCheck is false)
+            {
+                secondCheck = false;
+                break;
+            }
+        }
+        return firstCheck && secondCheck && thirdCheck;
+    }
+    public static bool ShowCardNumber(string number)
+    {
+        var firstCheck = number.Length == 16;
+        var secondCheck = true;
+        for (var i = 0; i < number.Length; i++)
+        {
+            if (char.IsDigit(number[i]) is false && firstCheck is false)
+            {
+                secondCheck = false;
+                break;
+            }
+        }
+        return firstCheck && secondCheck && thirdCheck;
+    }
+
+    public static bool DeleteCard(string number)
+    {
+        var exists = CardNumber.Contains(number);
+        CardNumber.Remove(number);
+        return exists;
+    }
+    public static bool UpdateNumber(string oldNumber, string newNumber)
+    {
+        var index = CardNumber.IndexOf(oldNumber);
+        var IsDigitformat = CheckCardNumber(newNumber);
+        var boolResult = true;
+        if (index < 0 || IsDigitformat is false)
+        {
+            boolResult = false;
+        }
+        newNumber = newNumber.ToUpper();
+        CardNumber[index] = newNumber;
+        return boolResult;
+    }
+    public static bool NewNumber(string oldNumber, string newNumber)
+    {
+        var index = CreditNumber.IndexOf(oldNumber);
+        var IsDigitformat = SeeCardNumber(newNumber);
+        var boolResult = true;
+        if (index < 0 || IsDigitformat is false)
+        {
+            boolResult = false;
+        }
+        newNumber = newNumber.ToUpper();
+        CreditNumber[index] = newNumber;
+        return boolResult;
+    }
+    public static bool ImproveNumber(string oldNumber, string newNumber)
+    {
+        var index = CreditCardNumber.IndexOf(oldNumber);
+        var IsDigitformat = ShowCardNumber(newNumber);
+        var boolResult = true;
+        if (index < 0 || IsDigitformat is false)
+        {
+            boolResult = false;
+        }
+        newNumber = newNumber.ToUpper();
+        CreditCardNumber[index] = newNumber;
+        return boolResult;
+    }
+    public static List<string> GetCardNumber()
+    {
+        return CardNumber;
+    }
+    public static List<string> TakeCardNumber()
+    {
+        return CreditNumber;
+    }
+    public static List<string> HaveCardNumber()
+    {
+        return CreditCardNumber;
+    }
+
+    public static void Menu(out int option)
+    {
+        Console.WriteLine("1. AddNumber");
+        Console.WriteLine("2. DeleteNumber");
+        Console.WriteLine("3. UpdateNumber");
+        Console.WriteLine("4. ReadNumber");
+        Console.Write("choose =>> ");
+        option = int.Parse(Console.ReadLine());
+    }
+
