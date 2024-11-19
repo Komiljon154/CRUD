@@ -14,18 +14,18 @@ using System.Threading.Tasks;
     public static List<string> CreditCardNumber = new List<string>();
     public static void DataSeed()
     {
-        CardNumber.Add("9860012106322345");
-        CardNumber.Add("9860022106322345");
-        CardNumber.Add("9860032106322345");
-        CardNumber.Add("9860042106322345");
+        CardNumber.Add("9860012106322341");
+        CardNumber.Add("9860022106322342");
+        CardNumber.Add("9860032106322343");
+        CardNumber.Add("9860042106322344");
         CardNumber.Add("9860052106322345");
     }
     public static void DatSeed()
     {
-        CreditNumber.Add("5614012106322345");
-        CreditNumber.Add("5614022106322345");
-        CreditNumber.Add("5614032106322345");
-        CreditNumber.Add("5614042106322345");
+        CreditNumber.Add("5614012106322341");
+        CreditNumber.Add("5614022106322342");
+        CreditNumber.Add("5614032106322343");
+        CreditNumber.Add("5614042106322344");
         CreditNumber.Add("5614052106322345");
     }
     public static void Seed()
